@@ -14,7 +14,7 @@ const initialState: ILoanInstallmentState = {
   loanInstallments: loanInstallmentData,
   tableState: {
     globalFilter: "",
-    sorting: [],
+    sorting: [{ desc: false, id: "sl" }],
     rowSelection: {},
     pagination: {
       pageIndex: 0,

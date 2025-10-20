@@ -7,10 +7,14 @@ import { format } from "date-fns";
 export const tableColumns: ColumnDef<ILoanInstallment>[] = [
   {
     accessorKey: "sl",
-    header: "SL",
-    cell: ({ row }) => row.index + 1,
-    enableSorting: false,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} columnName="SL" />
+    ),
+    cell: ({ row }) => <div className="px-3">{row.index + 1}</div>,
     enableHiding: false,
+    sortingFn: (rowA, rowB) => {
+      return rowA.index + 1 - (rowB.index + 1);
+    },
   },
   {
     id: "name",
