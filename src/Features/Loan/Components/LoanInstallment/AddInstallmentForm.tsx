@@ -48,6 +48,7 @@ import type z from "zod";
 
 const AddInstallmentForm = () => {
   const { employees, grantedLoan } = useAppSelector(selectLoanInstallData);
+  const closeCalendarRef = useRef<HTMLButtonElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const dispatch = useAppDispatch();
   const form = useForm({
@@ -213,12 +214,7 @@ const AddInstallmentForm = () => {
                           Payment <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            min={0}
-                            placeholder="Payment"
-                            {...field}
-                          />
+                          <Input placeholder="Payment" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">
                           Enter Payment.
@@ -256,13 +252,7 @@ const AddInstallmentForm = () => {
                           Install No <span className="text-red-500">*</span>
                         </FormLabel>
                         <FormControl>
-                          <Input
-                            type="number"
-                            step={1}
-                            min={0}
-                            placeholder="Install No"
-                            {...field}
-                          />
+                          <Input placeholder="Install No" {...field} />
                         </FormControl>
                         <FormDescription className="sr-only">
                           Enter Install No.
@@ -284,6 +274,7 @@ const AddInstallmentForm = () => {
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
+                                ref={closeCalendarRef}
                                 variant={"outline"}
                                 className={cn(
                                   "pl-3 text-left font-normal",
@@ -307,6 +298,7 @@ const AddInstallmentForm = () => {
                               }
                               onSelect={(date) => {
                                 field.onChange(date);
+                                closeCalendarRef.current?.click();
                               }}
                               captionLayout="dropdown"
                             />
