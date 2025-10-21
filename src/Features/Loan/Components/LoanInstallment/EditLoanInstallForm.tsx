@@ -36,10 +36,12 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, parseISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import type z from "zod";
 
 const EditLoanInstallForm = () => {
+  const closeCalendarRef = useRef<HTMLButtonElement>(null);
   const { loanInstallments, loanInstallEditId } = useAppSelector(
     selectLoanInstallData
   );
@@ -127,12 +129,7 @@ const EditLoanInstallForm = () => {
                         Payment <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          min={0}
-                          placeholder="Payment"
-                          {...field}
-                        />
+                        <Input placeholder="Payment" {...field} />
                       </FormControl>
                       <FormDescription className="sr-only">
                         Enter Payment.
@@ -170,13 +167,7 @@ const EditLoanInstallForm = () => {
                         Install No <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          type="number"
-                          step={1}
-                          min={0}
-                          placeholder="Install No"
-                          {...field}
-                        />
+                        <Input placeholder="Install No" {...field} />
                       </FormControl>
                       <FormDescription className="sr-only">
                         Enter Install No.
@@ -198,6 +189,7 @@ const EditLoanInstallForm = () => {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
+                              ref={closeCalendarRef}
                               variant={"outline"}
                               className={cn(
                                 "pl-3 text-left font-normal",
@@ -221,6 +213,7 @@ const EditLoanInstallForm = () => {
                             }
                             onSelect={(date) => {
                               field.onChange(date);
+                              closeCalendarRef.current?.click();
                             }}
                             captionLayout="dropdown"
                           />
